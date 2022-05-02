@@ -1,0 +1,11 @@
+lats=-6.79,-19.55,-31.32
+lons=105.17,108.79,114.84
+xyResolution=0.05
+outputDir=./sample/output/
+boxDir=./sample/box/
+north=-6.79
+south=-31.32
+east=114.84
+west=105.17
+nearestNeighborsMD5=5c369c9b187908454831a69103443e42
+maskBotAndSideEdgesMD5=54ae3abafbb047e7ff044184b0099c97
