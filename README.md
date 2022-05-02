@@ -154,7 +154,7 @@ See [Transect01.txt](./sample/Transect01.txt) as an example.
 * `*_nearestNeighbors.nc` stores an mapped points from your transect line to actual grid points
 * `*_maskBotAndSideEdges.nc` selects cells relevant for transport calculations
 
-These files are useful when you want to perform differently tagged runs which shares the same grid and transect. Make sure to add the md5 hashes of the intermediate files to the apporpiate input.txt line
+These files are useful when you want to perform differently tagged runs which shares the same grid and transect. Make sure to add the md5 hashes of the intermediate files to the [appropriate input.txt line](#what-the-input-transect_file-should-contain)
 ```
 # This will compute *_nearestNeighbors.nc and *_maskBotAndSideEdges.nc
 $ python3 computeTransport.py \
