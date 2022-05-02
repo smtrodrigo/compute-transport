@@ -832,7 +832,7 @@ def main():
     parser.add_argument('-d','--debug', action = 'store_true',
                         help='Enable DEBUG outputs')
     parser.add_argument('-g','--generate-intermediates-only', action = 'store_true',
-                        help='Only generate the intermidiate files, *_nearestNeighbors.nc and *_maskBotAndSideEdges.nc, then exit')
+                        help='Only generate the intermediate files, *_nearestNeighbors.nc and *_maskBotAndSideEdges.nc, then exit')
     parser.add_argument('-f','--force', action = 'store_true',
                         help='Always regenerate all files (default: skip recomputing existing files)')
     parser.add_argument('-b','--box', action = 'store_true',
@@ -844,7 +844,7 @@ def main():
     parser.add_argument('-t','--tag', metavar = 'TAG',
                          help='String to append at the end the output file, i.e.: *_totalUV_TAG.nc ')
     parser.add_argument('transect_file', metavar='TRANSECT_FILE',
-                        help='File that contains input parameters for this transect. TRANSECT_FILE is also used for intermidiate and output file prefixes, e.g. TRANSECT_FILE_totalUV.nc')
+                        help='File that contains input parameters for this transect. TRANSECT_FILE is also used for intermediate and output file prefixes, e.g. TRANSECT_FILE_totalUV.nc')
     
     args = parser.parse_args() # ['-d']
 

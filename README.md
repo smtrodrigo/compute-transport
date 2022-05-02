@@ -150,7 +150,32 @@ graph TD
 See [Transect01.txt](./sample/Transect01.txt) as an example.
 
 ## Intermediate files
-* 
+
+* `*_nearestNeighbors.nc` stores an mapped points from your transect line to actual grid points
+* `*_maskBotAndSideEdges.nc` selects cells relevant for transport calculations
+
+These files are useful when you want to perform differently tagged runs which shares the same grid and transect. Make sure to add the md5 hashes of the intermediate files to the apporpiate input.txt line
+```
+# This will compute *_nearestNeighbors.nc and *_maskBotAndSideEdges.nc
+$ python3 computeTransport.py \
+    --ufile './sample/input/B.E.13.BRCP85C5CN.ne120_t12.sehires38.003.sunway.CN_OFF.pop.h.UVEL.201001-201012.nc' \
+    --vfile './sample/input/B.E.13.BRCP85C5CN.ne120_t12.sehires38.003.sunway.CN_OFF.pop.h.VVEL.201001-201012.nc' \
+    --tag '2010' \
+    ./sample/Transect01.txt
+
+# This will reuse the pre-existing intermediate files and will run faster
+$ python3 computeTransport.py \
+    --ufile './sample/input/B.E.13.BRCP85C5CN.ne120_t12.sehires38.003.sunway.CN_OFF.pop.h.UVEL.201101-201112.nc' \
+    --vfile './sample/input/B.E.13.BRCP85C5CN.ne120_t12.sehires38.003.sunway.CN_OFF.pop.h.VVEL.201101-201112.nc' \
+    --tag '2011' \
+    ./sample/Transect01.txt
+
+$ python3 computeTransport.py \
+    --ufile './sample/input/B.E.13.BRCP85C5CN.ne120_t12.sehires38.003.sunway.CN_OFF.pop.h.UVEL.201201-201212.nc' \
+    --vfile './sample/input/B.E.13.BRCP85C5CN.ne120_t12.sehires38.003.sunway.CN_OFF.pop.h.VVEL.201201-201212.nc' \
+    --tag '2012' \
+    ./sample/Transect01.txt
+```
 
 ## Conventions and limitations
 
