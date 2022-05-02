@@ -12,7 +12,11 @@ conda env update --name itf --file environment.yml --prune
 ```
 This will allow additional python packages and CDO to be installed by `conda`. 
 
-## How to run
+## Sample run
+We will be computing the transport of a transect defined by `./sample/Transect01.txt`
+
+![Transect01 drawn from Indoensia to Australia](Transect01.jpeg)
+
 ### 1. Activate the conda environment
 Navigate to this repo's root, then run:
 ```
@@ -20,17 +24,41 @@ conda activate itf
 ```
 ### 2. Run the `computeTransport.py` script in the conda environment:
 ```
-(itf) $ python3 computeTransport.py
-    --ufile 'B.E.13.BRCP85C5CN.ne120_t12.sehires38.003.sunway.CN_OFF.pop.h.UVEL.201501-201512.nc' \
-    --vfile 'B.E.13.BRCP85C5CN.ne120_t12.sehires38.003.sunway.CN_OFF.pop.h.VVEL.201501-201512.nc' \
-    ./Transect01.txt
+(itf) $ python3 computeTransport.py \
+    --ufile './sample/input/B.E.13.BRCP85C5CN.ne120_t12.sehires38.003.sunway.CN_OFF.pop.h.UVEL.201501-201512.105.170_114.840_-31.320_-6.790.nc' \
+    --vfile './sample/input/B.E.13.BRCP85C5CN.ne120_t12.sehires38.003.sunway.CN_OFF.pop.h.VVEL.201501-201512.105.170_114.840_-31.320_-6.790.nc' \
+    ./sample/Transect01.txt
+```
+Something like this should pop up during the run:
+```
+2022-05-03 01:12:54.730163 1683874 [INFO] Starting
+2022-05-03 01:12:54.730208 1683874 [INFO] ufile: sample/input/B.E.13.BRCP85C5CN.ne120_t12.sehires38.003.sunway.CN_OFF.pop.h.UVEL.201501-201512.105.170_114.840_-31.320_-6.790.nc
+2022-05-03 01:12:54.730217 1683874 [INFO] vfile: sample/input/B.E.13.BRCP85C5CN.ne120_t12.sehires38.003.sunway.CN_OFF.pop.h.UVEL.201501-201512.105.170_114.840_-31.320_-6.790.nc
+2022-05-03 01:12:54.732921 1683874 [INFO] Creating 0.05-spaced points with endpoints -6.790 to -31.320 latitude and 105.170 to 114.840 longitude
+2022-05-03 01:12:54.906681 1683874 [INFO] ./sample/output//Transect01_nearestNeighbors.nc does not exist, and/or "nearestNeighborsMD5" is not set on ./sample/Transect01.txt
+2022-05-03 01:12:54.906715 1683874 [INFO] Performing nearest neighbor for 493 points
+2022-05-03 01:12:56.358592 1683874 [INFO] Creating ./sample/output//Transect01_nearestNeighbors.nc
+2022-05-03 01:12:56.383978 1683874 [INFO] Generating md5sum for ./sample/output//Transect01_nearestNeighbors.nc
+2022-05-03 01:12:56.385943 1683874 [INFO] ./sample/output//Transect01_maskBotAndSideEdges.nc does not exist, and/or "maskBotAndSideEdgesMD5" is not set on ./sample/Transect01.txt
+2022-05-03 01:12:56.386029 1683874 [INFO] Creating mask for 493 points
+2022-05-03 01:12:59.325506 1683874 [INFO] Creating ./sample/output//Transect01_maskBotAndSideEdges.nc
+2022-05-03 01:12:59.529989 1683874 [INFO] Generating md5sum for ./sample/output//Transect01_maskBotAndSideEdges.nc
+2022-05-03 01:12:59.539565 1683874 [INFO] Sorting indices to figure out velocity sides.
+2022-05-03 01:12:59.612391 1683874 [INFO] Computing transport using u and v.
+2022-05-03 01:13:00.364488 1683874 [INFO] Computed transport: [  5.97486417 -15.70044091  -2.7315463   -8.65086378  -7.02808906
+   8.78652236   1.22435789  -2.55819389   7.80532729 -12.30828503
+  -1.26679543   1.42979442]
+2022-05-03 01:13:00.364534 1683874 [INFO] Creating ./sample/output//Transect01_totalUV.nc
+2022-05-03 01:13:00.401615 1683874 [INFO] Generating md5sum for ./sample/output//Transect01_totalUV.nc
+2022-05-03 01:13:00.403018 1683874 [INFO] Done.
+(itf) [6818323@node01 compute-transport]$
 ```
 
-### 3. Navigate to `./output/transects/` to see the output:
-You can try running `ncdump` (if available) to see the contents of the file
+### 3. Navigate to `./sample/output/` to see the intermediate files and total transport NetCDF output:
+You can try running `ncdump` to see the contents of the computed transport file
 ```
-$ ncdump output/transects/IX1/IX1_totalUV_2015.nc
-netcdf IX1_totalUV_2015.nc {
+$ ncdump sample/output/Transect01_totalUV.nc
+netcdf Transect01_totalUV {
 dimensions:
         time = 12 ;
 variables:
@@ -49,10 +77,10 @@ data:
  time = 735110, 735141, 735169, 735200, 735230, 735261, 735291, 735322,
     735353, 735383, 735414, 735444 ;
 
- tPt = -6.96280127004239, -7.85129417018123, -6.98129136003175,
-    -14.999389408029, -14.000998301705, -23.0351287206712, -18.4427470499132,
-    -22.9315890106232, -18.0165440057381, -16.8907236473478,
-    -9.73942300136616, -9.97510873087705 ;
+ tPt = 5.97486416551518, -15.7004409096328, -2.73154630327149,
+    -8.65086378387783, -7.02808906189103, 8.78652236038894, 1.22435788586144,
+    -2.55819389346619, 7.80532728530221, -12.3082850286852,
+    -1.26679542660528, 1.42979442246872 ;
 }
 ```
 
@@ -106,9 +134,11 @@ graph TD
 |  south | __(used when `--box` is set)__ southern boundary of smaller U V file to be generated |
 |  east  | __(used when `--box` is set)__ eastern boundary of smaller U V file to be generated |
 |  west  | __(used when `--box` is set)__ western boundary of smaller U V file to be generated |
+|  nearestNeighborsMD5  | __(optional)__ MD5 hash of the expected *_nearestNeighbors.nc intermidiate file |
+|  maskBotAndSideEdgesMD5  | __(optional)__ MD5 hash of the expected *_maskBotAndSideEdges.nc intermidiate file |
 
 
-See [Transect01.txt](./Transect01.txt) as an example:
+See [Transect01.txt](./sample/Transect01.txt) as an example:
 ```
 lats=-6.79,-19.55,-31.32
 lons=105.17,108.79,114.84
