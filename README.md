@@ -137,19 +137,7 @@ graph TD
 |  nearestNeighborsMD5  | __(optional)__ MD5 hash of the expected *_nearestNeighbors.nc intermidiate file |
 |  maskBotAndSideEdgesMD5  | __(optional)__ MD5 hash of the expected *_maskBotAndSideEdges.nc intermidiate file |
 
-
-See [Transect01.txt](./sample/Transect01.txt) as an example:
-```
-lats=-6.79,-19.55,-31.32
-lons=105.17,108.79,114.84
-xyResolution=0.05
-outputDir=./output/transects/Transect01/
-boxDir=./input/roughcut/
-north=9.505
-south=-37.505
-east=139.505
-west=95.505
-```
+See [Transect01.txt](./sample/Transect01.txt) as an example.
 
 ## Conventions and limitations
 
@@ -192,7 +180,7 @@ NOT OK:                         OK:
 ## Gotchas
 
 ### Memory issues
-When you receive and error like"
+When you receive an error like:
 ```
 [..]
 MemoryError: Unable to allocate 10 GB for an array with shape 
