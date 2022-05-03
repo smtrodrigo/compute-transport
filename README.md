@@ -1,21 +1,29 @@
-# Computing transports with `computeTransport.py`
-This code uses CF-compliant, iHESP CESM1.3 HighRes U and V NetCDF files, to compute a transect's total transport.
+# Calculating total transport across a transect with `computeTransport.py`
+This code uses CF-compliant, [iHESP CESM1.3 HighRes u- and v-velocity NetCDF files](https://ihesp.github.io/archive/products/ihesp-products/data-release/DataRelease_Phase2.html) to compute a transect's total transport.
 
 ## Prerequisites
-* linux
-* python
-* conda
+This code runs on a CLI (command line interface).
+### Required software
+* `python3`
+* `conda`
 
 After prerequisites are met, run:
 ```
 conda env update --name itf --file environment.yml --prune
 ```
-This will allow additional python packages and CDO to be installed by `conda`. 
+This will allow additional python packages and CDO (Climate Data Operators) to be installed by `conda`. 
 
 ## Sample run
-We will be computing the transport of a transect defined by `./sample/Transect01.txt`
+We will be computing the transport across a transect defined by [`./sample/Transect01.txt`](./sample/Transect01.txt).
 
 ![Transect01 drawn from Indoensia to Australia](Transect01.jpeg)
+
+This example run uses a sub-sample of the 2015 u- and v-velocity files from iHESP CESM1.3 HighRes.
+```
+./sample/input/B.E.13.BRCP85C5CN.ne120_t12.sehires38.003.sunway.CN_OFF.pop.h.UVEL.201501-201512.105.170_114.840_-31.320_-6.790.nc
+./sample/input/B.E.13.BRCP85C5CN.ne120_t12.sehires38.003.sunway.CN_OFF.pop.h.VVEL.201501-201512.105.170_114.840_-31.320_-6.790.nc
+```
+> __Note:__ Alternatively, this code can utilize the original [u-velocity](https://datahub.geos.tamu.edu:8880/thredds/catalog/iHESPDataHUB/B.E.13.BRCP85C5CN.ne120_t12.sehires38.003.sunway.CN_OFF/ocn/UVEL/catalog.html?dataset=iHESPDataHUB/B.E.13.BRCP85C5CN.ne120_t12.sehires38.003.sunway.CN_OFF/ocn/UVEL/B.E.13.BRCP85C5CN.ne120_t12.sehires38.003.sunway.CN_OFF.pop.h.UVEL.201501-201512.nc) and [v-velocity](https://datahub.geos.tamu.edu:8880/thredds/catalog/iHESPDataHUB/B.E.13.BRCP85C5CN.ne120_t12.sehires38.003.sunway.CN_OFF/ocn/VVEL/catalog.html?dataset=iHESPDataHUB/B.E.13.BRCP85C5CN.ne120_t12.sehires38.003.sunway.CN_OFF/ocn/VVEL/B.E.13.BRCP85C5CN.ne120_t12.sehires38.003.sunway.CN_OFF.pop.h.VVEL.201501-201512.nc) files found on the iHESP CESM1.3 HighRes website. These provided subsamples are small enough to ensure a workable Git repository.
 
 ### 1. Activate the conda environment
 Navigate to this repo's root, then run:
@@ -65,7 +73,7 @@ Transect01_totalUV.nc
 Transect01_totalUV.nc.md5
 ```
 
-You can try running something like `ncdump` to see the contents of the computed transport file
+You can try running a command like `ncdump` to see the contents of the computed transport file
 ```
 $ ncdump sample/output/Transect01_totalUV.nc
 netcdf Transect01_totalUV {
@@ -120,15 +128,20 @@ options:
 ```
 
 ## Flowchart
+For a run with:
+```
+computeTransport.py -u UFILE_FILE -v VFILE_FILE [--box] [--generate-intermediates-only] TRANSECT_FILE
+```
 ```mermaid
 graph TD
-    A[Run computeTransport.py] --> B[Read U and V files]
-    B --> C[Create *_nearestNeighbors.nc]
-    C -->|--box| F[Generate smaller U and V files with CDO]
-    F --> D
-    C --> D[Create *_maskBotAndSideEdges.nc]
-    D -->|--generate-intermediates-only| G(End program)
-    D --> E[Create *_totalUV.nc]
+    A[Run computeTransport.py] -->|Read TRANSECT_FILE| B[Read UFILE_FILE and VFILE_FILE]
+    B --> D[Generate intermediate file, *_nearestNeighbors.nc]
+    B -->|--box| C[Generate smaller U and V files with CDO]
+    C --> D
+    D --> H 
+    H[Generate intermediate file, *_maskBotAndSideEdges.nc]
+    H -->|--generate-intermediates-only| G(End program)
+    H --> E[Create *_totalUV.nc]
     E --> G
 ```
 
@@ -163,6 +176,17 @@ $ python3 computeTransport.py \
     --tag '2010' \
     ./sample/Transect01.txt
 
+# After a successful run, check the generated md5s of the intermediate files:
+$ cat sample/output/Transect01_nearestNeighbors.nc.md5
+5c369c9b187908454831a69103443e42
+$ cat sample/output/Transect01_maskBotAndSideEdges.nc.md5
+54ae3abafbb047e7ff044184b0099c97
+
+# So that the nearest neighbor and mask intermediate files will not be recomputed,
+# add their associated MD5 hashes to the input text file. For example, you can use:
+$ echo "nearestNeighborsMD5=5c369c9b187908454831a69103443e42" >> sample/Transect01.txt
+$ echo "maskBotAndSideEdgesMD5=54ae3abafbb047e7ff044184b0099c97" >> sample/Transect01.txt
+
 # This will reuse the pre-existing intermediate files and will run faster
 $ python3 computeTransport.py \
     --ufile './sample/input/B.E.13.BRCP85C5CN.ne120_t12.sehires38.003.sunway.CN_OFF.pop.h.UVEL.201101-201112.nc' \
@@ -180,7 +204,7 @@ $ python3 computeTransport.py \
 ## Conventions and limitations
 
 ### Transport Sign Conventions
-The total transport magnitude is defined by this table:
+The sign of the total transport is defined by this table:
 | Transect Orientation  |  Direction | 
 |:----------------------|:-----------|
 |  horizontal | `+` towards north |
