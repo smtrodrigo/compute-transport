@@ -217,12 +217,8 @@ The sign of the total transport is defined by this table:
 This code cannot work with transect lines that change between positively and negatively sloping segments.
 
 ####
-The following transect is not suitable for this code because the slope changes from positive to negative from north to south.
-![Not okay](slopeError.jpg) 
-
-####
 In this image, the orange transect would be unsuitable because it changes from positively to negatively sloping from north to south. The blue transect is suitable for this code because it is negatively sloping from the two endpoints, and vertical and horizontal sections are okay. 
-![Sample transects](SampleTransects.jpeg) 
+![Sample transects](SampleTransects.jpg) 
 
 ### Assumptions about input U and V files
 * This code is tuned to only use iHESP CESM1.3 HighRes NetCDF files with a nominal resolution of 0.1deg for the ocean
