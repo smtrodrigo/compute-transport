@@ -164,7 +164,7 @@ See [Transect01.txt](./sample/Transect01.txt) as an example.
 
 ## Intermediate files
 
-* `*_nearestNeighbors.nc` stores an mapped points from your transect line to actual grid points
+* `*_nearestNeighbors.nc` stores mapped points from your transect line to actual grid points
 * `*_maskBotAndSideEdges.nc` selects cells relevant for transport calculations
 
 These files are useful when you want to perform differently tagged runs which shares the same grid and transect. Make sure to add the md5 hashes of the intermediate files to the [appropriate input.txt line](#what-the-input-transect_file-should-contain)
@@ -216,24 +216,13 @@ The sign of the total transport is defined by this table:
 ### Creating transect lines
 This code cannot work with transect lines that change between positively and negatively sloping segments.
 
-For example:
+####
+The following transect is not suitable for this code because the slope changes from positive to negative from north to south.
+![Not okay](slopeError.jpg) 
 
-```
-NOT OK:                         OK:
-┌────────────────────────┐ ┌────────────────────────┐
-│ x        xx            │ │  x                     │
-│  x      x  x           │ │  x                     │
-│   x   xx    x          │ │  x                     │
-│    x x      x          │ │  x                     │
-│     x        x         │ │  x                     │
-│               xx       │ │  x                     │
-│                 x      │ │  xx                    │
-│                  xx    │ │    xx                  │
-│                    x   │ │      xx                │
-│                     x  │ │        xxxxxxxx        │
-│                      x │ │                xxxxxxx │
-└────────────────────────┘ └────────────────────────┘
-```
+####
+In this image, the orange transect would be unsuitable because it changes from positively to negatively sloping from north to south. The blue transect is suitable for this code because it is negatively sloping from the two endpoints, and vertical and horizontal sections are okay. 
+![Sample transects](SampleTransects.jpeg) 
 
 ### Assumptions about input U and V files
 * This code is tuned to only use iHESP CESM1.3 HighRes NetCDF files with a nominal resolution of 0.1deg for the ocean
