@@ -18,12 +18,12 @@ We will be computing the transport across a transect defined by [`./sample/Trans
 
 ![Transect01 drawn from Indoensia to Australia](Transect01.jpeg)
 
-This example run uses a sub-sample of the 2015 u- and v-velocity files from iHESP CESM1.3 HighRes.
+This example run uses a subsample of the 2015 u- and v-velocity files from iHESP CESM1.3 HighRes.
 ```
 ./sample/input/B.E.13.BRCP85C5CN.ne120_t12.sehires38.003.sunway.CN_OFF.pop.h.UVEL.201501-201512.105.170_114.840_-31.320_-6.790.nc
 ./sample/input/B.E.13.BRCP85C5CN.ne120_t12.sehires38.003.sunway.CN_OFF.pop.h.VVEL.201501-201512.105.170_114.840_-31.320_-6.790.nc
 ```
-> __Note:__ Alternatively, this code can utilize the original [u-velocity](https://datahub.geos.tamu.edu:8880/thredds/catalog/iHESPDataHUB/B.E.13.BRCP85C5CN.ne120_t12.sehires38.003.sunway.CN_OFF/ocn/UVEL/catalog.html?dataset=iHESPDataHUB/B.E.13.BRCP85C5CN.ne120_t12.sehires38.003.sunway.CN_OFF/ocn/UVEL/B.E.13.BRCP85C5CN.ne120_t12.sehires38.003.sunway.CN_OFF.pop.h.UVEL.201501-201512.nc) and [v-velocity](https://datahub.geos.tamu.edu:8880/thredds/catalog/iHESPDataHUB/B.E.13.BRCP85C5CN.ne120_t12.sehires38.003.sunway.CN_OFF/ocn/VVEL/catalog.html?dataset=iHESPDataHUB/B.E.13.BRCP85C5CN.ne120_t12.sehires38.003.sunway.CN_OFF/ocn/VVEL/B.E.13.BRCP85C5CN.ne120_t12.sehires38.003.sunway.CN_OFF.pop.h.VVEL.201501-201512.nc) files found on the iHESP CESM1.3 HighRes website. These provided subsamples are small enough to ensure a workable Git repository.
+> __Note:__ Alternatively, this code can utilize the original [u-velocity](https://datahub.geos.tamu.edu:8880/thredds/catalog/iHESPDataHUB/B.E.13.BRCP85C5CN.ne120_t12.sehires38.003.sunway.CN_OFF/ocn/UVEL/catalog.html?dataset=iHESPDataHUB/B.E.13.BRCP85C5CN.ne120_t12.sehires38.003.sunway.CN_OFF/ocn/UVEL/B.E.13.BRCP85C5CN.ne120_t12.sehires38.003.sunway.CN_OFF.pop.h.UVEL.201501-201512.nc) and [v-velocity](https://datahub.geos.tamu.edu:8880/thredds/catalog/iHESPDataHUB/B.E.13.BRCP85C5CN.ne120_t12.sehires38.003.sunway.CN_OFF/ocn/VVEL/catalog.html?dataset=iHESPDataHUB/B.E.13.BRCP85C5CN.ne120_t12.sehires38.003.sunway.CN_OFF/ocn/VVEL/B.E.13.BRCP85C5CN.ne120_t12.sehires38.003.sunway.CN_OFF.pop.h.VVEL.201501-201512.nc) files found on the iHESP CESM1.3 HighRes website. These subsamples are just provided because of their convenient size, which ensure a workable Git repository.
 
 ### 1. Activate the conda environment
 Navigate to this repo's root, then run:
@@ -62,14 +62,14 @@ Something like this should pop up during the run:
 (itf) [6818323@node01 compute-transport]$
 ```
 
-### 3. Navigate to `./sample/output/` to see the intermediate files and total transport NetCDF output:
+### 3. Navigate to `./sample/output/` to see the intermediate files and total transport NetCDF output
 ```
 $ ls -1 sample/output/
-Transect01_maskBotAndSideEdges.nc
+Transect01_maskBotAndSideEdges.nc         # intermediate file
 Transect01_maskBotAndSideEdges.nc.md5
-Transect01_nearestNeighbors.nc
+Transect01_nearestNeighbors.nc            # intermediate file
 Transect01_nearestNeighbors.nc.md5
-Transect01_totalUV.nc
+Transect01_totalUV.nc                     # output
 Transect01_totalUV.nc.md5
 ```
 
@@ -157,8 +157,8 @@ graph TD
 |  south | __(used when `--box` is set)__ southern boundary of smaller U V file to be generated |
 |  east  | __(used when `--box` is set)__ eastern boundary of smaller U V file to be generated |
 |  west  | __(used when `--box` is set)__ western boundary of smaller U V file to be generated |
-|  nearestNeighborsMD5  | __(optional)__ MD5 hash of the expected *_nearestNeighbors.nc intermediate file |
-|  maskBotAndSideEdgesMD5  | __(optional)__ MD5 hash of the expected *_maskBotAndSideEdges.nc intermediate file |
+|  nearestNeighborsMD5  | __(optional)__ MD5 hash of the expected `*_nearestNeighbors.nc` intermediate file |
+|  maskBotAndSideEdgesMD5  | __(optional)__ MD5 hash of the expected `*_maskBotAndSideEdges.nc` intermediate file |
 
 See [Transect01.txt](./sample/Transect01.txt) as an example.
 
