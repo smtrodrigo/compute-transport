@@ -1,5 +1,5 @@
 # Calculating total transport across a transect with `computeTransport.py`
-This code uses CF-compliant, [iHESP CESM1.3 HighRes u- and v-velocity NetCDF files](https://ihesp.github.io/archive/products/ihesp-products/data-release/DataRelease_Phase2.html) to compute a transect's total transport.
+This code uses CF-compliant, [iHESP CESM1.3 HighRes u- and v-velocity NetCDF files](https://ihesp.github.io/archive/products/ihesp-products/data-release/DataRelease_Phase2.html) to compute a transect's total transport ([top 400 m](https://github.com/smtrodrigo/compute-transport/edit/main/README.md#top-400-m)).
 
 ## Prerequisites
 This code runs on a CLI (command line interface).
@@ -203,6 +203,10 @@ $ python3 computeTransport.py \
 
 ## Conventions and limitations
 
+### Top 400 m
+* The code is currently hardcoded to take only the top 400 m of transport. This is a remnant of our previous runs where we only needed the top 400 m to compare with observations.
+  https://github.com/smtrodrigo/compute-transport/blob/e4a09493ebddfe1798f25a054e3255cd552e56f2/computeTransport.py#L1084-L1089 
+
 ### Transport Sign Conventions
 The sign of the total transport is defined by this table:
 | Transect Orientation  |  Direction | 
@@ -223,8 +227,6 @@ In this image, the orange transect would be unsuitable because it changes from p
 ### Assumptions about input U and V files
 * This code is tuned to only use iHESP CESM1.3 HighRes NetCDF files with a nominal resolution of 0.1deg for the ocean
 * `-1` values are hardcoded to mean land on the file's REGION_MASK variable and therefore removed in all transport/LatLon operations
-* The code is currently hardcoded to take only the top 400 m of transport. This is a remnant of our previous runs where we only needed the top 400 m to compare with observations.
-  https://github.com/smtrodrigo/compute-transport/blob/e4a09493ebddfe1798f25a054e3255cd552e56f2/computeTransport.py#L1084-L1089 
 
 ## Gotchas
 
