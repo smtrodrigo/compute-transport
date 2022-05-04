@@ -223,6 +223,8 @@ In this image, the orange transect would be unsuitable because it changes from p
 ### Assumptions about input U and V files
 * This code is tuned to only use iHESP CESM1.3 HighRes NetCDF files with a nominal resolution of 0.1deg for the ocean
 * `-1` values are hardcoded to mean land on the file's REGION_MASK variable and therefore removed in all transport/LatLon operations
+* The code is currently hardcoded to take only the top 400 m of transport. This is a remnant of our previous runs where we only needed the top 400 m to compare with observations.
+  https://github.com/smtrodrigo/compute-transport/blob/e4a09493ebddfe1798f25a054e3255cd552e56f2/computeTransport.py#L1084-L1089 
 
 ## Gotchas
 
