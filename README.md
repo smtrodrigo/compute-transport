@@ -1,5 +1,5 @@
 # Calculating total transport across a transect with `computeTransport.py`
-This code uses CF-compliant, [iHESP CESM1.3 HighRes u- and v-velocity NetCDF files](https://ihesp.github.io/archive/products/ihesp-products/data-release/DataRelease_Phase2.html) to compute a transect's total transport ([top 400 m](https://github.com/smtrodrigo/compute-transport/edit/main/README.md#top-400-m)).
+This code uses CF-compliant, [iHESP CESM1.3 HighRes u- and v-velocity NetCDF files](https://ihesp.github.io/archive/products/ihesp-products/data-release/DataRelease_Phase2.html) to compute a transect's total transport ([top 400 m](https://github.com/smtrodrigo/compute-transport#top-400-m)).
 
 ## Prerequisites
 This code runs on a CLI (command line interface).
