@@ -240,7 +240,7 @@ MemoryError: Unable to allocate 10 GB for an array with shape
 Try using `--box` to leverage CDO's ability to efficiently create smaller U and V files:
 
 ```
-$ python3 computeTransport.py
+$ python3 computeTransport.py \
     --debug \
     --ufile './input/raw/uvel/B.E.13.BRCP85C5CN.ne120_t12.sehires38.003.sunway.CN_OFF.pop.h.UVEL.201501-201512.nc' \
     --vfile './input/raw/uvel/B.E.13.BRCP85C5CN.ne120_t12.sehires38.003.sunway.CN_OFF.pop.h.VVEL.201501-201512.nc' \
